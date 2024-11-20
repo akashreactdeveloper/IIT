@@ -189,11 +189,11 @@
             </svg>
             <div class="inline-flex flex-col gap-2">
                 <label for="username" class="text-primary-50 font-semibold text-white">Username</label>
-                <InputText id="username" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80 !text-white"></InputText>
+                <InputText id="username" v-model="username" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80 !text-white"></InputText>
             </div>
             <div class="inline-flex flex-col gap-2">
                 <label for="password" class="text-primary-50 font-semibold text-white">Password</label>
-                <InputText id="password" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80 !text-white" type="password"></InputText>
+                <InputText id="password" v-model="password" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80 !text-white" type="password"></InputText>
             </div>
             <h2 class="text-white">Doesn't have an account? <a @click="loginVisible = false; signupVisible = true" class="text-yellow-400 hover:cursor-pointer">SignUp</a></h2>
             <div class="flex items-center gap-4">
