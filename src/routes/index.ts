@@ -5,6 +5,7 @@ import About from '../pages/About.vue';
 import Courses from '../pages/Courses.vue';
 import SingleCourse from '../pages/singleCourse.vue';
 import Chapters from '../pages/Chapters.vue';
+import LoginPage from '../pages/LoginPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         name: 'Home',
         component: Home, // Renders in <router-view> inside MainLayout
+      },
+      {
+        path: 'loginpage',
+        name: 'LoginPage',
+        component: LoginPage,
       },
       {
         path: 'about',

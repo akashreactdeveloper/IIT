@@ -108,11 +108,13 @@
                 </div>
               </template>
             </Drawer>
+
+
             <div class="flex items-center space-x-4 pb-5" >
-              <Button icon="pi pi-bars" @click="visible = true" class="h-8" />
-            <div class="card w-full ">
-        <MegaMenu :model="items" class="p-4 bg-surface-0" style="border-radius: 3rem">
+              <div class="card w-full ">
+                <MegaMenu :model="items" class="p-4 bg-surface-0" style="border-radius: 3rem">
             <template #start>
+              <Button icon="pi pi-bars" @click="visible = true" class="h-8 mx-6" />
                 <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8">
                     <path
                         d="M25.87 18.05L23.16 17.45L25.27 20.46V29.78L32.49 23.76V13.53L29.18 14.73L25.87 18.04V18.05ZM25.27 35.49L29.18 31.58V27.67L25.27 30.98V35.49ZM20.16 17.14H20.03H20.17H20.16ZM30.1 5.19L34.89 4.81L33.08 12.33L24.1 15.67L30.08 5.2L30.1 5.19ZM5.72 14.74L2.41 13.54V23.77L9.63 29.79V20.47L11.74 17.46L9.03 18.06L5.72 14.75V14.74ZM9.63 30.98L5.72 27.67V31.58L9.63 35.49V30.98ZM4.8 5.2L10.78 15.67L1.81 12.33L0 4.81L4.79 5.19L4.8 5.2ZM24.37 21.05V34.59L22.56 37.29L20.46 39.4H14.44L12.34 37.29L10.53 34.59V21.05L12.42 18.23L17.45 26.8L22.48 18.23L24.37 21.05ZM22.85 0L22.57 0.69L17.45 13.08L12.33 0.69L12.05 0H22.85Z"
@@ -142,16 +144,19 @@
                     <span>{{ item.subtext }}</span>
                     <Button :label="item.label" outlined />
                 </div>
-            </template>
-            <template #end>
+              </template>
+              <template #end>
+              <Button label="Login" icon="pi pi-user" @click="loginVisible = true" class="mx-10 h-9" />
                 <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
             </template>
-        </MegaMenu>
-    </div>
+                </MegaMenu>
+              </div>
             </div>
           </div>
-          <!-- <h1 class="text-xl font-bold ml-10">{{ componentName }}</h1> -->
         </div>
+
+
+
         <div class="flex justify-between items-center">
           <div class="mb-2">
             <div class="relative">
@@ -167,6 +172,84 @@
       </div>
       <div class="flex-1 overflow-auto">
         <router-view></router-view>
+        <div class="card flex justify-center">
+
+          <Dialog v-model:visible="loginVisible" pt:root:class="!border-0 !bg-transparent" pt:mask:class="backdrop-blur-sm">
+    <template #container="{ closeCallback }">
+        <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl" style="background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))">
+            <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="block mx-auto">
+                <path
+                    d="M25.87 18.05L23.16 17.45L25.27 20.46V29.78L32.49 23.76V13.53L29.18 14.73L25.87 18.04V18.05ZM25.27 35.49L29.18 31.58V27.67L25.27 30.98V35.49ZM20.16 17.14H20.03H20.17H20.16ZM30.1 5.19L34.89 4.81L33.08 12.33L24.1 15.67L30.08 5.2L30.1 5.19ZM5.72 14.74L2.41 13.54V23.77L9.63 29.79V20.47L11.74 17.46L9.03 18.06L5.72 14.75V14.74ZM9.63 30.98L5.72 27.67V31.58L9.63 35.49V30.98ZM4.8 5.2L10.78 15.67L1.81 12.33L0 4.81L4.79 5.19L4.8 5.2ZM24.37 21.05V34.59L22.56 37.29L20.46 39.4H14.44L12.34 37.29L10.53 34.59V21.05L12.42 18.23L17.45 26.8L22.48 18.23L24.37 21.05ZM22.85 0L22.57 0.69L17.45 13.08L12.33 0.69L12.05 0H22.85Z"
+                    fill="var(--p-primary-700)"
+                />
+                <path
+                    d="M30.69 4.21L24.37 4.81L22.57 0.69L22.86 0H26.48L30.69 4.21ZM23.75 5.67L22.66 3.08L18.05 14.24V17.14H19.7H20.03H20.16H20.2L24.1 15.7L30.11 5.19L23.75 5.67ZM4.21002 4.21L10.53 4.81L12.33 0.69L12.05 0H8.43002L4.22002 4.21H4.21002ZM21.9 17.4L20.6 18.2H14.3L13 17.4L12.4 18.2L12.42 18.23L17.45 26.8L22.48 18.23L22.5 18.2L21.9 17.4ZM4.79002 5.19L10.8 15.7L14.7 17.14H14.74H15.2H16.85V14.24L12.24 3.09L11.15 5.68L4.79002 5.2V5.19Z"
+                    fill="var(--p-primary-200)"
+                />
+            </svg>
+            <div class="inline-flex flex-col gap-2">
+                <label for="username" class="text-primary-50 font-semibold text-white">Username</label>
+                <InputText id="username" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80 !text-white"></InputText>
+            </div>
+            <div class="inline-flex flex-col gap-2">
+                <label for="password" class="text-primary-50 font-semibold text-white">Password</label>
+                <InputText id="password" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80 !text-white" type="password"></InputText>
+            </div>
+            <h2 class="text-white">Doesn't have an account? <a @click="loginVisible = false; signupVisible = true" class="text-yellow-400 hover:cursor-pointer">SignUp</a></h2>
+            <div class="flex items-center gap-4">
+                <Button label="Cancel" @click="closeCallback" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 !text-white"></Button>
+                <Button label="Sign-In" @click="closeCallback" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 !text-white"></Button>
+            </div>
+        </div>
+    </template>
+          </Dialog>
+          <Dialog v-model:visible="signupVisible" pt:root:class="!border-0 !bg-transparent" pt:mask:class="backdrop-blur-sm">
+    <template #container="{ closeCallback }">
+        <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl" style="background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))">
+            <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="block mx-auto">
+                <path
+                    d="M25.87 18.05L23.16 17.45L25.27 20.46V29.78L32.49 23.76V13.53L29.18 14.73L25.87 18.04V18.05ZM25.27 35.49L29.18 31.58V27.67L25.27 30.98V35.49ZM20.16 17.14H20.03H20.17H20.16ZM30.1 5.19L34.89 4.81L33.08 12.33L24.1 15.67L30.08 5.2L30.1 5.19ZM5.72 14.74L2.41 13.54V23.77L9.63 29.79V20.47L11.74 17.46L9.03 18.06L5.72 14.75V14.74ZM9.63 30.98L5.72 27.67V31.58L9.63 35.49V30.98ZM4.8 5.2L10.78 15.67L1.81 12.33L0 4.81L4.79 5.19L4.8 5.2ZM24.37 21.05V34.59L22.56 37.29L20.46 39.4H14.44L12.34 37.29L10.53 34.59V21.05L12.42 18.23L17.45 26.8L22.48 18.23L24.37 21.05ZM22.85 0L22.57 0.69L17.45 13.08L12.33 0.69L12.05 0H22.85Z"
+                    fill="var(--p-primary-700)"
+                />
+                <path
+                    d="M30.69 4.21L24.37 4.81L22.57 0.69L22.86 0H26.48L30.69 4.21ZM23.75 5.67L22.66 3.08L18.05 14.24V17.14H19.7H20.03H20.16H20.2L24.1 15.7L30.11 5.19L23.75 5.67ZM4.21002 4.21L10.53 4.81L12.33 0.69L12.05 0H8.43002L4.22002 4.21H4.21002ZM21.9 17.4L20.6 18.2H14.3L13 17.4L12.4 18.2L12.42 18.23L17.45 26.8L22.48 18.23L22.5 18.2L21.9 17.4ZM4.79002 5.19L10.8 15.7L14.7 17.14H14.74H15.2H16.85V14.24L12.24 3.09L11.15 5.68L4.79002 5.2V5.19Z"
+                    fill="var(--p-primary-200)"
+                />
+            </svg>
+            <div class="inline-flex flex-col gap-4">
+                <!-- Username & Email on the same row -->
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label for="username" class="text-primary-50 font-semibold text-white">Username</label>
+                        <InputText id="username" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-full !text-white" v-model="username" />
+                    </div>
+                    <div class="flex-1">
+                        <label for="email" class="text-primary-50 font-semibold text-white">Email</label>
+                        <InputText id="email" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-full !text-white" v-model="email" />
+                    </div>
+                </div>
+                <!-- Password & Confirm Password on the same row -->
+                <div class="flex gap-4">
+                    <div class="flex-1">
+                        <label for="password" class="text-primary-50 font-semibold text-white">Password</label>
+                        <InputText id="password" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-full !text-white" type="password" v-model="password" />
+                    </div>
+                    <div class="flex-1">
+                        <label for="confirmPassword" class="text-primary-50 font-semibold text-white">Confirm Password</label>
+                        <InputText id="confirmPassword" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-full !text-white" type="password" v-model="confirmPassword" />
+                    </div>
+                </div>
+            </div>
+            <h2 class="text-white">Already have an account? <a @click="loginVisible = true; signupVisible = false" class="text-yellow-400 hover:cursor-pointer">SignIn</a></h2>
+            <div class="flex items-center gap-4">
+                <Button label="Cancel" @click="closeCallback" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 !text-white" />
+                <Button label="Sign Up" @click="handleSignup" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 !text-white" />
+            </div>
+        </div>
+    </template>
+</Dialog>
+
+        </div>
       </div>
     </main>
   </div>
@@ -177,17 +260,40 @@ import { defineComponent, ref } from 'vue';
 import 'primeicons/primeicons.css';
 import Drawer from 'primevue/drawer';
 import MegaMenu from 'primevue/megamenu';
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 export default defineComponent({
   name: 'MainLayout',
   components: {
     Drawer,
-    MegaMenu
+    MegaMenu,
+    Dialog,
+    Button,
+    InputText
   },
   setup() {
     const componentName = ref('Home');
     const visible = ref(false);
-    const isFavoritesVisible = ref(false);  // Track the visibility of the "Favorites" section
+    const isFavoritesVisible = ref(true);  // Track the visibility of the "Favorites" section
+    const loginVisible = ref(false);
+    const signupVisible = ref(true);
+const username = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+
+    const handleSignup = () => {
+    if (password.value !== confirmPassword.value) {
+        alert('Passwords do not match');
+        return;
+    }
+    // Call your signup API logic here
+    console.log('Signing up:', username.value, email.value, password.value);
+    // Handle success/failure as needed
+    signupVisible.value = false; // Close dialog on success
+};
     
     // Toggle dropdown visibility
     const toggleVisibility = () => {
@@ -248,7 +354,14 @@ export default defineComponent({
       Drawer,
       toggleVisibility,
       isFavoritesVisible,
-      items
+      items,
+      loginVisible,
+      signupVisible,
+      handleSignup,
+      username,
+      email,
+      password,
+      confirmPassword
     };
   }
 });
