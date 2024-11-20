@@ -146,7 +146,12 @@
                 </div>
               </template>
               <template #end>
-              <Button label="Login" icon="pi pi-user" @click="loginVisible = true" class="mx-10 h-9" />
+                <template v-if="isLoggedIn">
+                <Button label="Logout" icon="pi pi-sign-out" @click="handleLogout" class="mx-10 h-9" />
+                </template>
+                <template v-else>
+                <Button label="Login" icon="pi pi-user" @click="loginVisible = true" class="mx-10 h-9" />
+                </template>
                 <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
             </template>
                 </MegaMenu>
@@ -198,7 +203,7 @@
             <h2 class="text-white">Doesn't have an account? <a @click="loginVisible = false; signupVisible = true" class="text-yellow-400 hover:cursor-pointer">SignUp</a></h2>
             <div class="flex items-center gap-4">
                 <Button label="Cancel" @click="closeCallback" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 !text-white"></Button>
-                <Button label="Sign-In" @click="closeCallback" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 !text-white"></Button>
+                <Button label="Sign-In" @click="() => { closeCallback(); handleSignIn(); }" text class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10 !text-white"></Button>
             </div>
         </div>
     </template>
@@ -256,13 +261,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref , computed } from 'vue';
 import 'primeicons/primeicons.css';
 import Drawer from 'primevue/drawer';
 import MegaMenu from 'primevue/megamenu';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import API_URL from '../../constants.js';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -278,11 +286,33 @@ export default defineComponent({
     const visible = ref(false);
     const isFavoritesVisible = ref(true);  // Track the visibility of the "Favorites" section
     const loginVisible = ref(false);
-    const signupVisible = ref(true);
+    const signupVisible = ref(false);
 const username = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
+
+const handleSignIn = () => {
+  console.log('Username:', username.value);
+  console.log('Password:', password.value);
+
+  axios.post('http://192.168.184.183:8000/api/login/', {
+    username: username.value,
+    password: password.value
+  })
+  .then(response => {
+    Cookies.set('access_token', response.data.access, { expires: 7 });
+    location.reload(); // Refresh the page after login
+  })
+  .catch(error => {
+    console.error('There was an error!', error);
+  });
+};
+
+const handleLogout = () => {
+  Cookies.remove('access_token');
+  location.reload(); // Refresh the page after logout
+};
 
     const handleSignup = () => {
     if (password.value !== confirmPassword.value) {
@@ -348,6 +378,8 @@ const confirmPassword = ref('');
     }
 ]);
 
+    const isLoggedIn = computed(() => !!Cookies.get('access_token'));
+
     return {
       componentName,
       visible,
@@ -361,7 +393,11 @@ const confirmPassword = ref('');
       username,
       email,
       password,
-      confirmPassword
+      confirmPassword,
+      handleSignIn,
+      handleLogout,
+      Cookies,
+      isLoggedIn
     };
   }
 });
